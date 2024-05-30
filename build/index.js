@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const express4_1 = require("@apollo/server/express4");
 const graphql_1 = require("./graphql");
+const user_1 = require("./services/user");
 function init() {
     return __awaiter(this, void 0, void 0, function* () {
         const app = (0, express_1.default)();
@@ -28,8 +29,12 @@ function init() {
             //@ts-ignore
             context: (_a) => __awaiter(this, [_a], void 0, function* ({ req }) {
                 const token = req.headers["token"];
-                {
-                    hello: "dlksowpks";
+                try {
+                    const user = yield user_1.UserServices.decodeToken(token);
+                    return { user };
+                }
+                catch (err) {
+                    return err;
                 }
             }),
         }));

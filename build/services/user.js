@@ -66,7 +66,7 @@ class UserServices {
     }
     static genrateJWTToken(id, email) {
         return __awaiter(this, void 0, void 0, function* () {
-            return yield jsonwebtoken_1.default.sign({ id, email }, UserServices.jwtSecrt, { expiresIn: "5d" });
+            return yield jsonwebtoken_1.default.sign({ id, email }, UserServices.jwtSecrt);
         });
     }
     static decodeToken(pass) {

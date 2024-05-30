@@ -18,7 +18,14 @@ const Query = {
         return yield user_1.UserServices.genrateUserToken(payload);
     }),
     getloggedInUser: (_, pay, context) => {
-        console.log(context);
+        if (!context) {
+            return new Error("i dont know you");
+        }
+        return context.user;
+    },
+    getUserLoggedOut: (_, pay, context) => {
+        context = "";
+        return "logged out ";
     }
 };
 const Mutation = {

@@ -5,5 +5,6 @@ const Query = `#graphql
 say(name:String):String
 getUserToken(email:String!,password:String!):String
 getloggedInUser:User
+getUserLoggedOut:String
 `;
 exports.default = Query;

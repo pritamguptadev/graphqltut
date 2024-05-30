@@ -65,11 +65,12 @@ export class UserServices{
        
     }
     private static async genrateJWTToken(id:string,email:string):Promise<any>{
-        return await jwt.sign({id,email},UserServices.jwtSecrt,{expiresIn:"5d"})
+        return await jwt.sign({id,email},UserServices.jwtSecrt)
        
     }
     public static async decodeToken(pass:string):Promise<any>{
         let res=await jwt.verify(pass,UserServices.jwtSecrt);
+        
         return res
     }
 

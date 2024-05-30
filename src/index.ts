@@ -21,8 +21,13 @@ async function init() {
       //@ts-ignore
       context: async ({ req }) => {
         const token: any = req.headers["token"];
-        {hello:"dlksowpks"}
-        
+        try {
+          const user = await UserServices.decodeToken(token);
+
+          return { user };
+        } catch (err) {
+          return err;
+        }
       },
     })
   );

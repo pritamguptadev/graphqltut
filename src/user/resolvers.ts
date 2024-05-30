@@ -9,8 +9,15 @@ const Query={
         return await UserServices.genrateUserToken(payload);
     },
     getloggedInUser:(_:any,pay:any,context:any)=>{
-        console.log(context);
+        if(!context){
+           return new Error("i dont know you")
+        }
+        return context.user
         
+    },
+    getUserLoggedOut:(_:any,pay:any,context:any)=>{
+         context="";
+         return "logged out "
     }
 
 }
