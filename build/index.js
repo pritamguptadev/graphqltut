@@ -24,7 +24,15 @@ function init() {
         app.get("/", (req, res) => {
             res.json({ message: "server is running" });
         });
-        app.use("/graphql", (0, express4_1.expressMiddleware)(yield (0, graphql_1.createApolloGraphqlServer)()));
+        app.use("/graphql", (0, express4_1.expressMiddleware)(yield (0, graphql_1.createApolloGraphqlServer)(), {
+            //@ts-ignore
+            context: (_a) => __awaiter(this, [_a], void 0, function* ({ req }) {
+                const token = req.headers["token"];
+                {
+                    hello: "dlksowpks";
+                }
+            }),
+        }));
         app.listen(PORT, () => {
             console.log("running on 8000");
         });

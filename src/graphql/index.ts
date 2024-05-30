@@ -1,36 +1,31 @@
 import {ApolloServer} from "@apollo/server";
 import { prismaClient } from "../DB/lib/db";
+import { User } from "../user";
+
+
+// console.log(User);
+
 
 export async function createApolloGraphqlServer(){
     const gqlServer=new ApolloServer({
         typeDefs:`
+            ${User.typeDefs}
         type Query {
-            hello:String,
-            say(name:String):String
+           ${User.Query}
         }
        type Mutation {
-        createUser(firstName:String!,lastName:String!,email:String!,password:String!):Boolean
-
+            ${User.Mutation}
         }`,
         resolvers:{
             Query:{
-                hello:()=>'hey there i am a graphql server ',
-                say:(_,{name}:{name:String})=>`hey there ${name}, How are you`
+                ...User.resolvers.Query
             },
             Mutation:{
-                createUser:async(_,{firstName,lastName,email,password}:{firstName:string,lastName:string,email:string,password:string})=>{
-                    await prismaClient.userData.create({
-                        data:{
-                            email,
-                            firstName,
-                            lastName,
-                            password
-                        }
-                    })
+                ...User.resolvers.Mutation
                 }
             }
         }
-    })
+    )
     await gqlServer.start();
     return gqlServer
 }

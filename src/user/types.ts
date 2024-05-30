@@ -1,4 +1,13 @@
-const typeDefs=`#graphql`;
+const typeDefs=`#graphql
+type User {
+        id: ID!
+        firstName: String!
+        lastName: String
+        email: String!
+        profileImageURL: String
+    }
+   
+`;
 
 
 export default typeDefs

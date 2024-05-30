@@ -11,36 +11,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createApolloGraphqlServer = void 0;
 const server_1 = require("@apollo/server");
-const db_1 = require("../DB/lib/db");
+const user_1 = require("../user");
+// console.log(User);
 function createApolloGraphqlServer() {
     return __awaiter(this, void 0, void 0, function* () {
         const gqlServer = new server_1.ApolloServer({
             typeDefs: `
+            ${user_1.User.typeDefs}
         type Query {
-            hello:String,
-            say(name:String):String
+           ${user_1.User.Query}
         }
        type Mutation {
-        createUser(firstName:String!,lastName:String!,email:String!,password:String!):Boolean
-
+            ${user_1.User.Mutation}
         }`,
             resolvers: {
-                Query: {
-                    hello: () => 'hey there i am a graphql server ',
-                    say: (_, { name }) => `hey there ${name}, How are you`
-                },
-                Mutation: {
-                    createUser: (_1, _a) => __awaiter(this, [_1, _a], void 0, function* (_, { firstName, lastName, email, password }) {
-                        yield db_1.prismaClient.userData.create({
-                            data: {
-                                email,
-                                firstName,
-                                lastName,
-                                password
-                            }
-                        });
-                    })
-                }
+                Query: Object.assign({}, user_1.User.resolvers.Query),
+                Mutation: Object.assign({}, user_1.User.resolvers.Mutation)
             }
         });
         yield gqlServer.start();
