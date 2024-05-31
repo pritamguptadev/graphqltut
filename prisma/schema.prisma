@@ -20,4 +20,18 @@ model UserData{
   profileImage String? 
   email String @unique
   password String  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  todo Todos[]
+}
+
+model Todos{
+  id String @id @default(uuid())
+  content String
+  imageURL String
+  auther UserData @relation(fields: [authorId],references: [id])
+  authorId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
 }
