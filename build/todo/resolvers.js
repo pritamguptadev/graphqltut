@@ -11,13 +11,28 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolvers = void 0;
 const todos_1 = require("../services/todos");
-const queries = {};
+const queries = {
+    getAllUserTodos: (_1, _a, ctx_1) => __awaiter(void 0, [_1, _a, ctx_1], void 0, function* (_, {}, ctx) {
+        // console.log(ctx,"gggggggg");
+        if (!ctx)
+            throw new Error("user to auth");
+        const todos = yield todos_1.TodoService.getAllUserTodos(ctx.id);
+        console.log(todos, "gggggggdddd");
+        return todos;
+    })
+};
 const mutations = {
-    createTweet: (parent_1, _a, ctx_1) => __awaiter(void 0, [parent_1, _a, ctx_1], void 0, function* (parent, { payload }, ctx) {
+    createTweet: (parent_1, _b, ctx_2) => __awaiter(void 0, [parent_1, _b, ctx_2], void 0, function* (parent, { payload }, ctx) {
         if (!ctx.user)
             throw new Error("You are not authenticated");
         const tweet = yield todos_1.TodoService.createTodo(Object.assign(Object.assign({}, payload), { userId: ctx.user.id }));
         return tweet;
     }),
+    updateTweet: (_2, _c, ctx_3) => __awaiter(void 0, [_2, _c, ctx_3], void 0, function* (_, { id, imageURL, content }, ctx) {
+        if (!ctx.user)
+            throw new Error("you are not authenicated");
+        const todos = yield todos_1.TodoService.updateTweet(id, imageURL, content);
+        console.log(todos, "llllllll");
+    })
 };
 exports.resolvers = { mutations, queries };

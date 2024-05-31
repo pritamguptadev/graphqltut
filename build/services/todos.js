@@ -26,5 +26,18 @@ class TodoService {
             return todo;
         });
     }
+    static getAllUserTodos(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const todos = db_1.prismaClient.todos.findMany({ where: { id } });
+            console.log(todos, "sare todos");
+            return todos;
+        });
+    }
+    static updateTweet(id, content, imageURL) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const todo = yield db_1.prismaClient.todos.update({ where: { id }, data: { content, imageURL } });
+            return todo;
+        });
+    }
 }
 exports.TodoService = TodoService;

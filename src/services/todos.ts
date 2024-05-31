@@ -22,4 +22,15 @@ export class TodoService{
         
         return todo
     }
+    public static async getAllUserTodos(id:string){
+        const todos=prismaClient.todos.findMany({where:{id}})
+        console.log(todos,"sare todos");
+        return todos;
+        
+    }
+    public static async updateTweet(id:string,content?:string,imageURL?:string){
+        const todo=await prismaClient.todos.update({where:{id},data:{content,imageURL}})
+        return todo
+        
+    }
 }
