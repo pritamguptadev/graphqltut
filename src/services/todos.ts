@@ -33,4 +33,8 @@ export class TodoService{
         return todo
         
     }
+    public static async deleteTweet(id:string){
+        const todo=await prismaClient.todos.delete({where:{id}})
+        return todo;
+    }
 }

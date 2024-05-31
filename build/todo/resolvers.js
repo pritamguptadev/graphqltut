@@ -19,16 +19,23 @@ const queries = {
         const todos = yield todos_1.TodoService.getAllUserTodos(ctx.id);
         console.log(todos, "gggggggdddd");
         return todos;
+    }),
+    deletetweet: (_2, _b, ctx_2) => __awaiter(void 0, [_2, _b, ctx_2], void 0, function* (_, { id }, ctx) {
+        if (!ctx.user)
+            throw new Error("user are not authenticated");
+        const todo = yield todos_1.TodoService.deleteTweet(id);
+        // console.log(todo);
+        return todo;
     })
 };
 const mutations = {
-    createTweet: (parent_1, _b, ctx_2) => __awaiter(void 0, [parent_1, _b, ctx_2], void 0, function* (parent, { payload }, ctx) {
+    createTweet: (parent_1, _c, ctx_3) => __awaiter(void 0, [parent_1, _c, ctx_3], void 0, function* (parent, { payload }, ctx) {
         if (!ctx.user)
             throw new Error("You are not authenticated");
         const tweet = yield todos_1.TodoService.createTodo(Object.assign(Object.assign({}, payload), { userId: ctx.user.id }));
         return tweet;
     }),
-    updateTweet: (_2, _c, ctx_3) => __awaiter(void 0, [_2, _c, ctx_3], void 0, function* (_, { id, imageURL, content }, ctx) {
+    updateTweet: (_3, _d, ctx_4) => __awaiter(void 0, [_3, _d, ctx_4], void 0, function* (_, { id, imageURL, content }, ctx) {
         if (!ctx.user)
             throw new Error("you are not authenicated");
         const todos = yield todos_1.TodoService.updateTweet(id, imageURL, content);

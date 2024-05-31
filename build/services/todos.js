@@ -39,5 +39,11 @@ class TodoService {
             return todo;
         });
     }
+    static deleteTweet(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const todo = yield db_1.prismaClient.todos.delete({ where: { id } });
+            return todo;
+        });
+    }
 }
 exports.TodoService = TodoService;

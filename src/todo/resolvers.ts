@@ -9,6 +9,14 @@ const queries={
         return todos
         
         
+    },
+    deletetweet:async(_:any,{id}:{id:string},ctx:any)=>{
+        if(!ctx.user) throw new Error("user are not authenticated");
+        const todo=await TodoService.deleteTweet(id);
+        // console.log(todo);
+        return todo;
+        
+        
     }
 
 }
