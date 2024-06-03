@@ -28,8 +28,8 @@ class TodoService {
     }
     static getAllUserTodos(id) {
         return __awaiter(this, void 0, void 0, function* () {
-            const todos = db_1.prismaClient.todos.findMany({ where: { id } });
-            console.log(todos, "sare todos");
+            const todos = yield db_1.prismaClient.todos.findMany({ where: { authorId: id } });
+            // console.log(todos,"sare todos");
             return todos;
         });
     }

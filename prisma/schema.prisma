@@ -22,7 +22,19 @@ model UserData{
   password String  
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  follower Follows[] @relation("follower")
+  following Follows[] @relation("following")
   todo Todos[]
+}
+
+model Follows{
+  follower UserData @relation("follower", fields: [followerId], references: [id])
+  followerId String
+  following UserData @relation("following", fields: [followingId], references: [id])
+  followingId String 
+
+  @@id([followerId,followingId])
+
 }
 
 model Todos{

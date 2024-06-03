@@ -75,6 +75,23 @@ class UserServices {
             return res;
         });
     }
+    static followUser(from, to) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let res = yield db_1.prismaClient.follows.create({ data: {
+                    follower: { connect: { id: from } },
+                    following: { connect: { id: to } },
+                } });
+            return res;
+        });
+    }
+    static unfollowUser(from, to) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let res = yield db_1.prismaClient.follows.delete({ where: {
+                    followerId_followingId: { followerId: from, followingId: to }
+                } });
+            return res;
+        });
+    }
 }
 exports.UserServices = UserServices;
 UserServices.jwtSecrt = "kddlkfdf";

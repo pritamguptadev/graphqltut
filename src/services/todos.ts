@@ -23,8 +23,8 @@ export class TodoService{
         return todo
     }
     public static async getAllUserTodos(id:string){
-        const todos=prismaClient.todos.findMany({where:{id}})
-        console.log(todos,"sare todos");
+        const todos=await prismaClient.todos.findMany({where:{authorId:id}})
+        // console.log(todos,"sare todos");
         return todos;
         
     }

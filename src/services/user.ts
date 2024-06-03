@@ -10,6 +10,7 @@ export interface CreateUserPayload{
     lastName?:string;
     email:string;
     password:string;
+    imageUrl?:any
 }
 export interface loginCred{
     email:string;
@@ -72,6 +73,19 @@ export class UserServices{
         let res=await jwt.verify(pass,UserServices.jwtSecrt);
         
         return res
+    }
+    public static async followUser(from:string,to:string):Promise<any>{
+        let res=await prismaClient.follows.create({data: {
+            follower: { connect: { id: from } },
+            following: { connect: { id: to } },
+          }})
+          return res
+    }
+    public static async unfollowUser(from:string,to:string):Promise<any>{
+        let res=await prismaClient.follows.delete({where: {
+            followerId_followingId:{followerId:from,followingId:to}
+          }})
+          return res
     }
 
 

@@ -1,5 +1,7 @@
+import { UserData } from "@prisma/client";
 import { prismaClient } from "../DB/lib/db"
 import { CreateUserPayload, UserServices } from "../services/user"
+import { uploader } from "../services/imageuploader";
 
 
 const Query={
@@ -24,9 +26,25 @@ const Query={
 const Mutation={
         createUser:async(_:any,payload:CreateUserPayload)=>{
             const res=await UserServices.createUser(payload)
+            await uploader(payload.imageUrl)
             return res.id
+        },
+        followUser:async(_:any,{to}:{to:string},ctx:any)=>{
+            const res= await UserServices.followUser(ctx.user.id,to)
+            console.log(res,"jlkaskjriepfjdlkv");
+            return res
+            
         }
     }
 
+const extraResolvers={
+    User:{
+        tweets:async(parent:any)=>{
+          let data= await prismaClient.todos.findMany({where:{authorId:parent.id}})
+          return data
+        }
+    }
+}
 
-export const resolvers={Query,Mutation}
+
+export const resolvers={Query,Mutation,extraResolvers}

@@ -34,10 +34,7 @@ function createApolloGraphqlServer() {
             ${todo_1.Tweet.muatations}
         
         }`,
-            resolvers: {
-                Query: Object.assign(Object.assign({}, user_1.User.resolvers.Query), todo_1.Tweet.resolvers.queries),
-                Mutation: Object.assign(Object.assign({}, user_1.User.resolvers.Mutation), todo_1.Tweet.resolvers.mutations)
-            }
+            resolvers: Object.assign(Object.assign({ Query: Object.assign(Object.assign({}, user_1.User.resolvers.Query), todo_1.Tweet.resolvers.queries), Mutation: Object.assign(Object.assign({}, user_1.User.resolvers.Mutation), todo_1.Tweet.resolvers.mutations) }, user_1.User.resolvers.extraResolvers), todo_1.Tweet.resolvers.extraResolvers)
         });
         yield gqlServer.start();
         return gqlServer;

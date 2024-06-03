@@ -37,7 +37,9 @@ export async function createApolloGraphqlServer(){
                 ...User.resolvers.Mutation,
                 ...Tweet.resolvers.mutations
            
-                }
+                },
+                ...User.resolvers.extraResolvers,
+                ...Tweet.resolvers.extraResolvers
             }
         }
     )

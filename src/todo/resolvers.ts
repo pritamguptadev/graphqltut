@@ -1,3 +1,4 @@
+import { prismaClient } from "../DB/lib/db";
 import { CreateTodoPayload, TodoService } from "../services/todos";
 
 const queries={
@@ -5,7 +6,7 @@ const queries={
         // console.log(ctx,"gggggggg");
         if(!ctx)throw new Error("user to auth")
         const todos=await TodoService.getAllUserTodos(ctx.id);
-        console.log(todos,"gggggggdddd");
+        // console.log(todos,"gggggggdddd");
         return todos
         
         
@@ -39,8 +40,17 @@ const mutations = {
             const todos=await TodoService.updateTweet(id,imageURL,content)
         console.log(todos,"llllllll");
         
-    }
+    },
+    
   };
+  const extraResolvers={
+    Tweet:{
+      author:async(parent:any)=>
+        await prismaClient.userData.findUnique({where:{id:parent.authorId}})  
+    }
+    
+    
+}
 
-  export const resolvers = { mutations, queries };
+  export const resolvers = { mutations, queries,extraResolvers };
 

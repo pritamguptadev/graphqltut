@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolvers = void 0;
+const db_1 = require("../DB/lib/db");
 const todos_1 = require("../services/todos");
 const queries = {
     getAllUserTodos: (_1, _a, ctx_1) => __awaiter(void 0, [_1, _a, ctx_1], void 0, function* (_, {}, ctx) {
@@ -17,7 +18,7 @@ const queries = {
         if (!ctx)
             throw new Error("user to auth");
         const todos = yield todos_1.TodoService.getAllUserTodos(ctx.id);
-        console.log(todos, "gggggggdddd");
+        // console.log(todos,"gggggggdddd");
         return todos;
     }),
     deletetweet: (_2, _b, ctx_2) => __awaiter(void 0, [_2, _b, ctx_2], void 0, function* (_, { id }, ctx) {
@@ -40,6 +41,11 @@ const mutations = {
             throw new Error("you are not authenicated");
         const todos = yield todos_1.TodoService.updateTweet(id, imageURL, content);
         console.log(todos, "llllllll");
-    })
+    }),
 };
-exports.resolvers = { mutations, queries };
+const extraResolvers = {
+    Tweet: {
+        author: (parent) => __awaiter(void 0, void 0, void 0, function* () { return yield db_1.prismaClient.userData.findUnique({ where: { id: parent.authorId } }); })
+    }
+};
+exports.resolvers = { mutations, queries, extraResolvers };
