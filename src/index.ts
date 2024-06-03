@@ -4,6 +4,7 @@ import { ApolloServer } from "@apollo/server";
 import { prismaClient } from "./DB/lib/db";
 import { createApolloGraphqlServer } from "./graphql";
 import { UserServices } from "./services/user";
+import fs from "fs"
 
 async function init() {
   const app = express();
@@ -31,6 +32,8 @@ async function init() {
       },
     })
   );
+
+  
   app.listen(PORT, () => {
     console.log("running on 8000");
   });

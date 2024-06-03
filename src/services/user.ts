@@ -1,6 +1,7 @@
 import jwt from "jsonwebtoken";
 import bcrpyt from "bcryptjs";
 import { prismaClient } from "../DB/lib/db";
+import { uploader } from "./imageuploader";
 
 
 
@@ -20,14 +21,17 @@ export interface loginCred{
 export class UserServices{
     private static jwtSecrt="kddlkfdf"
     public static async createUser(payload:CreateUserPayload){
-        const {firstName,lastName,email,password}=payload;
+        const {firstName,lastName,email,password,imageUrl}=payload;
        let hashed=await UserServices.createHashedPassword(password)
+       let data:any= await uploader("/Users/pritam/desktop/download.jpeg")
+        //    console.log(data,"kjhgfdsytrebvcgfd");
        return  prismaClient.userData.create({
             data:{
                 firstName,
                 email,
                 lastName:lastName?lastName:"",
-                password:hashed
+                password:hashed,
+                profileImage:data?.secure_url
             }
         })
 

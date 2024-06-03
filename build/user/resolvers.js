@@ -12,7 +12,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.resolvers = void 0;
 const db_1 = require("../DB/lib/db");
 const user_1 = require("../services/user");
-const imageuploader_1 = require("../services/imageuploader");
 const Query = {
     hello: () => 'hey there i am a graphql server ',
     say: (_, { name }) => `hey there ${name}, How are you`,
@@ -33,7 +32,6 @@ const Query = {
 const Mutation = {
     createUser: (_, payload) => __awaiter(void 0, void 0, void 0, function* () {
         const res = yield user_1.UserServices.createUser(payload);
-        yield (0, imageuploader_1.uploader)(payload.imageUrl);
         return res.id;
     }),
     followUser: (_1, _a, ctx_1) => __awaiter(void 0, [_1, _a, ctx_1], void 0, function* (_, { to }, ctx) {

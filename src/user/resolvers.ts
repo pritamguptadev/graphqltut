@@ -26,7 +26,8 @@ const Query={
 const Mutation={
         createUser:async(_:any,payload:CreateUserPayload)=>{
             const res=await UserServices.createUser(payload)
-            await uploader(payload.imageUrl)
+           
+           
             return res.id
         },
         followUser:async(_:any,{to}:{to:string},ctx:any)=>{

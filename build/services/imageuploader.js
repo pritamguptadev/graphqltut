@@ -8,36 +8,25 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.uploader = void 0;
 const cloudinary_1 = require("cloudinary");
-const fs_1 = __importDefault(require("fs"));
 function uploader(filePath) {
     return __awaiter(this, void 0, void 0, function* () {
+        console.log(filePath, "FilePath");
         cloudinary_1.v2.config({
             cloud_name: "dayauokco",
             api_key: "728126833127673",
-            api_secret: "yp3OlXVmCO7KNaOU88-j9-wMFvY" // Click 'View Credentials' below to copy your API secret
+            api_secret: "yp3OlXVmCO7KNaOU88-j9-wMFvY"
         });
         return new Promise((resolve, reject) => {
-            // Read file from disk
-            fs_1.default.readFile(filePath, (error, data) => {
+            // Upload file to Cloudinary
+            cloudinary_1.v2.uploader.upload(filePath, (error, result) => {
                 if (error) {
                     reject(error);
                 }
                 else {
-                    // Upload file to Cloudinary
-                    cloudinary_1.v2.uploader.upload(data, (error, result) => {
-                        if (error) {
-                            reject(error);
-                        }
-                        else {
-                            resolve(result);
-                        }
-                    });
+                    resolve(result);
                 }
             });
         });

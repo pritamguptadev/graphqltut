@@ -16,17 +16,21 @@ exports.UserServices = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
 const db_1 = require("../DB/lib/db");
+const imageuploader_1 = require("./imageuploader");
 class UserServices {
     static createUser(payload) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { firstName, lastName, email, password } = payload;
+            const { firstName, lastName, email, password, imageUrl } = payload;
             let hashed = yield UserServices.createHashedPassword(password);
+            let data = yield (0, imageuploader_1.uploader)("/Users/pritam/desktop/download.jpeg");
+            //    console.log(data,"kjhgfdsytrebvcgfd");
             return db_1.prismaClient.userData.create({
                 data: {
                     firstName,
                     email,
                     lastName: lastName ? lastName : "",
-                    password: hashed
+                    password: hashed,
+                    profileImage: data === null || data === void 0 ? void 0 : data.secure_url
                 }
             });
         });
